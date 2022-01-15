@@ -1,0 +1,21 @@
+# base image
+FROM node:alpine
+
+WORKDIR '/app'
+
+# install dependencies
+COPY package.json .
+
+RUN npm config set unsafe-perm true
+
+RUN npm install
+
+# copy is no longer needed. keeping only for reference
+COPY . .
+
+RUN chown -R node /app/node_modules
+
+USER node
+
+# start up cmd
+CMD ["npm", "run", "start"]
